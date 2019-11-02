@@ -4,8 +4,9 @@
   /**
    * Variables
    */
-  const key = '',
-        url = 'https://api.nytimes.com/svc/topstories/v2/home.json?api-key=',
+  const key = 'RpQ2CoOGTql4vuZ5tBhGjZKOzEaGBt9j',
+        sections = ['books', 'business', 'health', 'science', 'technology'],
+        url = 'https://api.nytimes.com/svc/topstories/v2/',
         app = d.querySelector('#app');
 
   /**
@@ -17,22 +18,32 @@
     return (response.ok) ? response.json() : Promise.reject(response)
   }
 
+  const formatTime = function(published_date) {
+    const months = ["JAN", "FEB", "MAR","APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    let date = new Date(Date.parse(published_date));
+
+    return date.getDate() + '-' + months[date.getMonth()] + '-' + date.getFullYear();
+  };
+
   // populate article template with data returned
   const articleTemplate = function(article) {
     return `<article>
               <header>
-                <h2 class="entry-title"><a href="${ article.url }">${ article.title }</a></h2>
+                <h3 class="entry-title">${ article.title }</h3>
                 <div class="byline">
                   ${ article.byline }
                 </div>
                 <div class="post-meta">
                   <span class="posted-on">
-                    <time datetime="${ article.published_date }">${ article.published_date }</time>
+                    <time datetime="${ article.published_date }">${ formatTime(article.published_date) }</time>
                   </span>
                 </div>
               </header>
               <div class="entry-content">
                 <p>${article.abstract }</p>
+              </div>
+              <div class="btn">
+                <a href="${ article.url }">Tell Me More</a>
               </div>
             </article>`;
   };
@@ -45,8 +56,13 @@
   };
 
   // insert the articles into the DOM
-  const renderArticles = function(articles) {
-    app.innerHTML = generateTemplates(articles).join('');
+  const renderSection = function(articles) {
+    const section = generateTemplates(articles).slice(0,5);
+
+    section.unshift(`<section><h2>${ articles.section.charAt(0).toUpperCase() + articles.section.slice(1) }</h2>`);
+    section.push(`</section>`);
+
+    app.innerHTML += section.join('');
   };
 
   // if something went wrong display and error
@@ -54,13 +70,17 @@
     app.innerHTML = `<p>Something went wront ${ error }</p>`;
   };
 
+  // fetch a set of articles
   const run = function() {
-    fetch(url + key)
-      .then(getJSON)
-      .then(renderArticles)
-      .catch(renderError);
+    sections.forEach(section => {
+      fetch(url + section + '.json?api-key=' + key)
+        .then(getJSON)
+        .then(renderSection)
+        .catch(renderError);
+    });
   };
 
+  // start the script
   run();
 
 })(document);
