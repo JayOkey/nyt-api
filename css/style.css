@@ -7,21 +7,22 @@ html {
 h1 {
   margin: 2rem auto 3rem;
   max-width: 50rem;
-  padding: 1rem;
+  padding: 1rem 3rem;
 }
 
 h2 {
   margin-bottom: 1rem;
-  padding-left: 1rem;
+  padding-left: 1.5rem;
 }
 
 h3 {
-  margin: 0 0 1rem;
+  margin: 0 0 .5rem;
 }
 
 article {
+  border-radius: .25rem;
   margin-bottom: 2rem;
-  padding: 1rem;
+  padding: 1.25rem 1.5rem;
 }
 
 article:hover {
@@ -44,12 +45,17 @@ section {
 .post-meta {
   color: rgba(0,0,0,.6);
   font-size: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.entry-content {
   margin-bottom: 2rem;
 }
 
 .btn {
   display: inline-block;
   border: none;
+  border-radius: .25rem;
   padding: 1rem 2rem;
   margin: 0;
   text-decoration: none;
@@ -68,6 +74,7 @@ section {
 .btn:hover,
 .btn:focus {
   background: #0074d9;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
 }
 
 .btn:focus {

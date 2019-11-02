@@ -5,8 +5,9 @@
    * Variables
    */
   const key = 'RpQ2CoOGTql4vuZ5tBhGjZKOzEaGBt9j',
-        sections = ['books', 'business', 'health', 'science', 'technology'],
         url = 'https://api.nytimes.com/svc/topstories/v2/',
+        sections = ['books', 'business', 'health', 'science', 'technology'],
+        numOfArticles = 3;
         app = d.querySelector('#app');
 
   /**
@@ -18,6 +19,7 @@
     return (response.ok) ? response.json() : Promise.reject(response)
   }
 
+  // format the article date
   const formatTime = function(published_date) {
     const months = ["JAN", "FEB", "MAR","APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
     let date = new Date(Date.parse(published_date));
@@ -48,6 +50,7 @@
 
   // convert the array article data into an array of article templates
   const generateTemplates = function(articles) {
+    // convert each article in the articles results array into an article template
     return articles.results.map(function(article) {
       return articleTemplate(article);
     });
@@ -55,11 +58,13 @@
 
   // insert the articles into the DOM
   const renderSection = function(articles) {
-    const section = generateTemplates(articles).slice(0,5);
-
+    // assign articles template array to section array
+    const section = generateTemplates(articles).slice(0, numOfArticles);
+    // prepend section opening to section array
     section.unshift(`<section><h2>Section: <span class="section">${ articles.section.charAt(0).toUpperCase() + articles.section.slice(1) }</span></h2>`);
+    // append closing section tag to the section array
     section.push(`</section>`);
-
+    // convert section array to a string and append it to the app DOM element
     app.innerHTML += section.join('');
   };
 
