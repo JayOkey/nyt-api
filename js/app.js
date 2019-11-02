@@ -31,10 +31,10 @@
               <header>
                 <h3 class="entry-title">${ article.title }</h3>
                 <div class="post-meta">
-                  <span class="byline">${ article.byline }</span>
                   <span class="posted-on">
-                    <time datetime="${ article.published_date }">${ formatTime(article.published_date) }</time>
+                    <time datetime="${ article.published_date }">${ formatTime(article.published_date) }</time>,
                   </span>
+                  <span class="byline"> ${ article.byline }</span>
                 </div>
               </header>
               <div class="entry-content">
