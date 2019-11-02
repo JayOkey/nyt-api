@@ -59,7 +59,7 @@
   const renderSection = function(articles) {
     const section = generateTemplates(articles).slice(0,5);
 
-    section.unshift(`<section><h2>${ articles.section.charAt(0).toUpperCase() + articles.section.slice(1) }</h2>`);
+    section.unshift(`<section><h2>Section: ${ articles.section.charAt(0).toUpperCase() + articles.section.slice(1) }</h2>`);
     section.push(`</section>`);
 
     app.innerHTML += section.join('');
