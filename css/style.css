@@ -13,6 +13,10 @@ h2 {
   margin-bottom: 2rem;
 }
 
+h3 {
+  margin-bottom: 1rem;
+}
+
 article {
   margin-bottom: 3rem;
 }
@@ -24,6 +28,12 @@ section {
 #app {
   margin: auto auto;
   max-width: 70vw;
+}
+
+.post-meta {
+  color: rgba(0,0,0,.6);
+  font-size: 0.8rem;
+  margin-bottom: 2rem;
 }
 
 .btn {
