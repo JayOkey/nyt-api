@@ -27,23 +27,31 @@
     return date.getDate() + '-' + months[date.getMonth()] + '-' + date.getFullYear();
   };
 
+  // sanitizeHTML string
+  const sanitizeHTML = function (str) {
+    const temp = d.createElement('div');
+    temp.textContent = str;
+    return temp.innerHTML;
+  };
+
   // populate article template with data returned
   const articleTemplate = function(article) {
+
     return `<article>
               <header>
-                <h3 class="entry-title">${ article.title }</h3>
+                <h3 class="entry-title">${ sanitizeHTML(article.title) }</h3>
                 <div class="post-meta">
+                  <span class="byline"> ${ sanitizeHTML(article.byline) }, </span>
                   <span class="posted-on">
-                    <time datetime="${ article.published_date }">${ formatTime(article.published_date) }</time>,
+                    <time datetime="${ sanitizeHTML(article.published_date) }">${ formatTime(sanitizeHTML(article.published_date)) }</time>
                   </span>
-                  <span class="byline"> ${ article.byline }</span>
                 </div>
               </header>
               <div class="entry-content">
-                <p>${article.abstract }</p>
+                <p>${ sanitizeHTML(article.abstract) }</p>
               </div>
               <div class="btn">
-                <a href="${ article.url }">Tell Me More</a>
+                <a href="${ sanitizeHTML(article.url) }">Tell Me More</a>
               </div>
             </article>`;
   };
@@ -61,7 +69,7 @@
     // assign articles template array to section array
     const section = generateTemplates(articles).slice(0, numOfArticles);
     // prepend section opening to section array
-    section.unshift(`<section><h2>Section: <span class="section">${ articles.section.charAt(0).toUpperCase() + articles.section.slice(1) }</span></h2>`);
+    section.unshift(`<section><h2>Section: <span class="section">${ sanitizeHTML(articles.section) }</span></h2>`);
     // append closing section tag to the section array
     section.push(`</section>`);
     // convert section array to a string and append it to the app DOM element
@@ -70,7 +78,7 @@
 
   // if something went wrong display and error
   const renderError = function(error) {
-    app.innerHTML = `<p>Something went wront ${ error }</p>`;
+    app.innerHTML = `<p>Something went wrong ${ error }</p>`;
   };
 
   // fetch a set of articles
